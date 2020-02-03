@@ -80,6 +80,8 @@ def main():
     
     
 
+    
+
     dp.add_error_handler(error_handler.error)
     dp.add_handler(CommandHandler('r', restart, filters=Filters.user(DEV_ID)))
 
