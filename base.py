@@ -1,4 +1,13 @@
+import logging
 import sqlite3
+
+
+
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(funcName)s - %(message)s',
+                    level = logging.INFO,
+                    filename = 'log.log'
+                    )
+
 
 
 def create_base():
@@ -76,14 +85,14 @@ def write_goods_to_base(data):
     conn.close()
 
 
-def get_data_rows(table, column, id):
+def get_data_row(table, column, user_id):
     conn = sqlite3.connect('base.db')
     cursor = conn.cursor()
-    cursor.execute(f'SELECT {column} FROM {table} WHERE id=?', (id,))
-    data_list = cursor.fetchall()
+    cursor.execute(f'SELECT {column} FROM {table} WHERE user_id=?', (user_id,))
+    row = cursor.fetchall()
     conn.commit()
     conn.close()
-    return data_list
+    return row[0]
 
 
 def get_subcat_list(cat_id):

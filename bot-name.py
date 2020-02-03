@@ -9,6 +9,7 @@ from telegram.ext import (CallbackQueryHandler, CommandHandler, ConversationHand
 from telegram.ext import messagequeue as mq
 
 from threading import Thread
+from base import *
 from config import *
 from handlers import *
 from messages import *
@@ -21,7 +22,7 @@ import utils
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(funcName)s - %(message)s',
                     level = logging.INFO,
-                    filename = 'bot.log'
+                    filename = 'log.log'
                     )
 
 
@@ -42,6 +43,7 @@ def restart(update, context):
 
 
 def main():   
+    create_base()
        
     # Инициализируем MessageQueue 
     mybot.bot._msg_queue = mq.MessageQueue()
@@ -66,10 +68,16 @@ def main():
 
     
 
-    # dp.add_handler(CallbackQueryHandler(query_handler, pattern='^start_conv'))        
+    
     dp.add_handler(CommandHandler('start', start))
+
     dp.add_handler(MessageHandler(Filters.regex('^(Раздеть девушку 👅)$'), send_me_photo))
-    dp.add_handler(MessageHandler(Filters.photo, replenish_balans))
+    # dp.add_handler(MessageHandler(Filters.photo, replenish_balans))
+    dp.add_handler(MessageHandler(Filters.photo, get_file_id))
+
+    dp.add_handler(MessageHandler(Filters.regex('^(Примеры 📷)$'), examples_photo))
+    dp.add_handler(MessageHandler(Filters.regex('^(Баланс 💰)$'), get_balans))
+    
     
 
     dp.add_error_handler(error_handler.error)

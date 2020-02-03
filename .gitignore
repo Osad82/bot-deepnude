@@ -7,4 +7,5 @@ config*
 images/
 persistence_file
 *.db
+.idea/
 
