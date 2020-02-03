@@ -53,29 +53,32 @@ def main():
     dp = mybot.dispatcher
     
 
-    approve_conv = ConversationHandler(
-        entry_points=[CallbackQueryHandler(add_or_not_user_access)], 
+    # approve_conv = ConversationHandler(
+    #     entry_points=[CallbackQueryHandler(add_or_not_user_access)], 
 
-        states={
-            '1': [MessageHandler(Filters.text, get_real_name),
-                  CallbackQueryHandler(pass_get_real_name, pattern='passs')]
-        }, 
+    #     states={
+    #         '1': [MessageHandler(Filters.text, get_real_name),
+    #               CallbackQueryHandler(pass_get_real_name, pattern='passs')]
+    #     }, 
 
-        fallbacks=[]
-    )
+    #     fallbacks=[]
+    # )
 
     
 
-    dp.add_handler(CallbackQueryHandler(query_handler, pattern='^start_conv'))        
+    # dp.add_handler(CallbackQueryHandler(query_handler, pattern='^start_conv'))        
     dp.add_handler(CommandHandler('start', start))
+    dp.add_handler(MessageHandler(Filters.regex('^(Раздеть девушку 👅)$'), send_me_photo))
+    dp.add_handler(MessageHandler(Filters.photo, replenish_balans))
+    
 
     dp.add_error_handler(error_handler.error)
     dp.add_handler(CommandHandler('r', restart, filters=Filters.user(DEV_ID)))
 
-    dp.add_handler(MessageHandler(Filters.user(TG_ADMIN_ID), send_admin_message_to_user))
-    dp.add_handler(
-        MessageHandler(Filters.text & (~ Filters.user(TG_ADMIN_ID)), send_all_user_messages_to_admin)
-        )
+    # dp.add_handler(MessageHandler(Filters.user(TG_ADMIN_ID), send_admin_message_to_user))
+    # dp.add_handler(
+    #     MessageHandler(Filters.text & (~ Filters.user(TG_ADMIN_ID)), send_all_user_messages_to_admin)
+    #     )
 
 
     

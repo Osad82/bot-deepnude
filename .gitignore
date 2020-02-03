@@ -5,3 +5,6 @@ __pycache__/
 tmp*
 config*
 images/
+persistence_file
+*.db
+
